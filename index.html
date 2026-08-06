@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>节点化对话树剧本编辑器</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+  <!-- Toolbar -->
+  <div id="toolbar">
+    <div class="brand"><span class="dot"></span><span data-i18n="brand.title">剧本节点编辑器</span></div>
+    <div class="tb-sep"></div>
+    <button class="tb-btn primary" id="btn-add-dialogue" data-i18n="toolbar.addDialogue">💬 添加对话节点</button>
+    <button class="tb-btn primary" id="btn-add-choice" data-i18n="toolbar.addChoice">🔀 添加分支节点</button>
+    <div class="tb-sep"></div>
+    <button class="tb-btn" id="btn-export" data-i18n="toolbar.export">⬇ 导出 JSON</button>
+    <button class="tb-btn" id="btn-import" data-i18n="toolbar.import">⬆ 导入 JSON</button>
+    <button class="tb-btn" id="btn-templates" data-i18n="toolbar.templates">📄 默认模板</button>
+    <div class="tb-sep"></div>
+    <button class="tb-btn danger" id="btn-clear" data-i18n="toolbar.clear">🗑 清空画布</button>
+    <div class="tb-sep"></div>
+    <button class="tb-btn primary" id="btn-play" data-i18n="toolbar.play">▶ 预览剧本</button>
+    <div class="spacer"></div>
+    <div class="lang-switch" id="lang-switch">
+      <button type="button" data-lang="zh-CN" class="active">中文</button>
+      <button type="button" data-lang="en-US">EN</button>
+    </div>
+    <div id="zoom-indicator">100%</div>
+    <button class="tb-btn" id="btn-fit" data-i18n="toolbar.fit">⤢ 适应画面</button>
+  </div>
+
+  <div id="main">
+    <!-- Canvas -->
+    <div id="canvas-wrap">
+      <div class="bg-orbs" aria-hidden="true">
+        <span class="orb o1"></span>
+        <span class="orb o2"></span>
+        <span class="orb o3"></span>
+        <span class="orb o4"></span>
+      </div>
+      <div id="viewport">
+        <svg id="edge-svg">
+          <defs>
+            <marker id="arrow-def" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" class="edge-arrow"></path>
+            </marker>
+            <marker id="arrow-def-selected" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#ff9a3c"></path>
+            </marker>
+          </defs>
+          <g id="edges-group"></g>
+          <path id="temp-edge" class="temp-edge-path" d="" visibility="hidden"></path>
+        </svg>
+        <div id="nodes-layer"></div>
+      </div>
+
+      <!-- Minimap -->
+      <div id="minimap-wrap">
+        <span class="minimap-label">Minimap</span>
+        <canvas id="minimap-canvas" width="200" height="120"></canvas>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <div class="sb-header">
+        <div class="sb-title" data-i18n="sidebar.title">属性面板</div>
+        <div class="sb-sub" data-i18n="sidebar.subtitle">选中节点以编辑详细信息</div>
+      </div>
+      <div id="sidebar-content">
+        <div class="sb-empty" data-i18n-html="sidebar.empty">还没有选中任何节点<br>点击画布上的节点查看/编辑属性<br><br>提示：Delete / Backspace 可删除选中的节点或连线</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Status bar -->
+<div id="status-bar">
+  <button type="button" id="sb-toggle-grid" class="sb-toggle" data-i18n-title="status.snapHint" data-i18n="status.snapOff">⊞ 网格对齐</button>
+  <span class="sb-stat"><span data-i18n="status.start">Start</span> <b id="sb-count-start">0</b></span>
+  <span class="sb-stat"><span data-i18n="status.dialogue">Dialogue</span> <b id="sb-count-dialogue">0</b></span>
+  <span class="sb-stat"><span data-i18n="status.choice">Choice</span> <b id="sb-count-choice">0</b></span>
+  <span class="sb-stat"><span data-i18n="status.connections">Connections</span> <b id="sb-count-conn">0</b></span>
+  <span class="sb-stat sb-selection" id="sb-selection-stat" style="display:none;"><span data-i18n="status.selected">已选</span> <b id="sb-count-selected">0</b></span>
+  <span class="sb-spacer"></span>
+  <button type="button" id="sb-validation-btn" class="sb-issues ok">✓ <span id="sb-issue-count">0</span> <span data-i18n="status.issues">问题</span></button>
+  <span class="sb-dirty" id="sb-dirty" data-i18n="status.saved">已自动保存</span>
+  <span class="sb-shortcut-hint" id="sb-shortcut-hint" data-i18n="status.shortcutHint">按 ? 查看快捷键</span>
+</div>
+
+<!-- Validation popover -->
+<div id="validation-popover" class="popover" style="display:none;">
+  <div class="popover-header" data-i18n="validation.title">校验结果</div>
+  <div id="validation-list"></div>
+</div>
+
+<!-- Search palette -->
+<div id="search-palette" class="modal-overlay" style="display:none;">
+  <div class="search-box">
+    <input type="text" id="search-input" placeholder="搜索节点..." data-i18n-attr="placeholder" data-i18n="search.placeholder">
+    <div id="search-results"></div>
+    <div class="search-hint" data-i18n="search.hint">输入关键字以过滤节点 · ↑↓ 选择 · Enter 跳转 · Esc 关闭</div>
+  </div>
+</div>
+
+<!-- Drag-drop overlay -->
+<div id="drop-overlay" class="drop-overlay" style="display:none;">
+  <div class="drop-box" data-i18n="drop.hint">松开鼠标导入 JSON 文件</div>
+</div>
+
+<input type="file" id="file-input" accept=".json,application/json">
+
+<!-- Keyboard shortcuts help modal -->
+<div class="modal-overlay" id="shortcuts-modal" style="display:none;">
+  <div class="modal-box shortcuts-box">
+    <div class="modal-header">
+      <h3 data-i18n="shortcuts.title">键盘快捷键</h3>
+      <div class="modal-close" id="shortcuts-modal-close">✕</div>
+    </div>
+    <div class="modal-body" id="shortcuts-list"></div>
+  </div>
+</div>
+
+<!-- Recovery modal -->
+<div class="modal-overlay" id="recovery-modal" style="display:none;">
+  <div class="modal-box recovery-box">
+    <div class="modal-header">
+      <h3 data-i18n="recovery.title">恢复上次未保存的内容？</h3>
+    </div>
+    <div class="modal-body">
+      <p data-i18n="recovery.desc">浏览器中检测到未保存的剧本草稿，是否恢复？</p>
+      <p class="recovery-meta" id="recovery-meta"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="tb-btn" id="btn-recovery-discard" data-i18n="recovery.discard">丢弃</button>
+      <button class="tb-btn primary" id="btn-recovery-restore" data-i18n="recovery.restore">恢复</button>
+    </div>
+  </div>
+</div>
+
+<!-- Node context menu -->
+<div id="node-ctx-menu">
+  <div class="ctx-item" data-node-ctx="duplicate" data-i18n="nodeCtx.duplicate">📋 复制节点 (Ctrl+D)</div>
+  <div class="ctx-item" data-node-ctx="set-start" data-i18n="nodeCtx.setStart">⭐ 设为起始节点</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item ctx-danger" data-node-ctx="delete" data-i18n="nodeCtx.delete">🗑 删除节点</div>
+</div>
+
+<!-- Export Modal -->
+<div class="modal-overlay" id="export-modal" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 data-i18n="export.title">导出剧本 JSON</h3>
+      <div class="modal-close" id="export-modal-close">✕</div>
+    </div>
+    <div class="modal-body">
+      <textarea id="export-textarea" readonly></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="tb-btn" id="btn-copy-json" data-i18n="export.copy">📋 复制到剪贴板</button>
+      <button class="tb-btn primary" id="btn-download-json" data-i18n="export.download">⬇ 下载 .json 文件</button>
+    </div>
+  </div>
+</div>
+
+<!-- Template Picker Modal -->
+<div class="modal-overlay" id="template-modal" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 data-i18n="templates.title">选择默认模板</h3>
+      <div class="modal-close" id="template-modal-close">✕</div>
+    </div>
+    <div class="modal-body">
+      <div class="template-warn" data-i18n="templates.warn">⚠ 加载模板将会清空当前画布上的所有内容，请注意提前导出备份。</div>
+      <div class="template-grid" id="template-grid"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- Context Menu -->
+<div id="context-menu">
+  <div class="ctx-search-wrap">
+    <input type="text" id="ctx-search-input" placeholder="搜索节点类型..." data-i18n-attr="placeholder" data-i18n="ctx.searchPlaceholder">
+  </div>
+  <div id="ctx-items"></div>
+</div>
+
+<!-- Play Mode Overlay -->
+<div id="play-overlay">
+  <div id="play-exit-btn" title="退出预览" data-i18n-attr="title" data-i18n="play.exit">✕</div>
+  <div id="play-progress-badge" data-i18n="play.badge">剧本预览模式</div>
+
+  <div id="play-choices"></div>
+
+  <div id="play-end-panel">
+    <div class="end-title" data-i18n="play.endTitle">🎬 剧本播放结束</div>
+    <div class="end-sub" data-i18n="play.endSub">已到达没有后续连接的节点</div>
+    <div class="end-actions">
+      <button class="end-restart" id="btn-play-restart" data-i18n="play.restart">🔁 重新开始</button>
+      <button class="end-exit" id="btn-play-exit-2" data-i18n="play.exit">退出预览</button>
+    </div>
+  </div>
+
+  <div id="play-dialogue-box">
+    <div id="play-speaker"></div>
+    <div id="play-text"></div>
+    <div id="play-continue-hint"><span data-i18n="play.continue">点击继续</span><span class="hint-arrow">▼</span></div>
+  </div>
+</div>
+
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

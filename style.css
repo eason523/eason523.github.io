@@ -8,8 +8,8 @@
 html, body { margin: 0; padding: 0; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
-  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'PingFang SC',
-               'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Nunito', 'Noto Sans SC', ui-sans-serif, system-ui, -apple-system,
+               'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
   color: var(--fg);
@@ -51,6 +51,10 @@ ul { list-style: none; padding: 0; margin: 0; }
   --fs-2xl: 2.5rem;    /* 40 */
   --fs-3xl: 4rem;      /* 64 */
   --fs-display: 6rem;  /* 96 */
+
+  /* playful rounded display font (bilibili-toy feel) */
+  --font-display: 'ZCOOL KuaiLe', 'Baloo 2', 'Nunito', 'Noto Sans SC',
+                  ui-sans-serif, system-ui, sans-serif;
 
   /* space */
   --s-1: .5rem;   /* 8  */
@@ -211,10 +215,10 @@ ul { list-style: none; padding: 0; margin: 0; }
   display: inline-flex;
   align-items: center;
   gap: var(--s-2);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  letter-spacing: .02em;
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  letter-spacing: .01em;
   transition: opacity var(--t-fast) var(--ease);
 }
 .nav__brand:hover { opacity: .8; }
@@ -405,10 +409,11 @@ ul { list-style: none; padding: 0; margin: 0; }
 }
 .hero__title {
   margin: 0;
+  font-family: var(--font-display);
   font-size: clamp(3rem, 9vw, var(--fs-display));
-  line-height: .95;
+  line-height: 1.05;
   font-weight: 600;
-  letter-spacing: -.04em;
+  letter-spacing: -.02em;
 }
 .hero__title-sep {
   display: inline-block;
@@ -508,9 +513,10 @@ ul { list-style: none; padding: 0; margin: 0; }
 }
 .section__title {
   margin: 0 0 var(--s-2);
+  font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, var(--fs-2xl));
   font-weight: 600;
-  letter-spacing: -.02em;
+  letter-spacing: -.01em;
   line-height: 1.1;
 }
 .section__sub {
@@ -581,6 +587,7 @@ ul { list-style: none; padding: 0; margin: 0; }
 }
 .card__title {
   margin: 0;
+  font-family: var(--font-display);
   font-size: var(--fs-lg);
   font-weight: 600;
   display: flex;
@@ -713,6 +720,7 @@ ul { list-style: none; padding: 0; margin: 0; }
 .blog__post-title {
   flex: 1;
   margin: 0;
+  font-family: var(--font-display);
   font-size: var(--fs-base);
   font-weight: 500;
   color: var(--fg);
@@ -930,7 +938,7 @@ body.modal-open { overflow: hidden; }
   color: var(--accent);
   letter-spacing: .1em;
 }
-.journey__title { margin: 0 0 var(--s-1); font-size: var(--fs-lg); font-weight: 600; letter-spacing: -.01em; }
+.journey__title { margin: 0 0 var(--s-1); font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 600; letter-spacing: -.01em; }
 .journey__desc { margin: 0; font-size: var(--fs-sm); color: var(--fg-muted); max-width: 52ch; line-height: 1.6; }
 
 /* ---------- 12b. github repos ---------- */

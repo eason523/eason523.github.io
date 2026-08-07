@@ -1,5 +1,5 @@
 /* ============================================================
-   eason / 许肥球 — homepage interactions
+   eason / eason — homepage interactions
    - language switch + i18n apply
    - reveal-on-scroll via IntersectionObserver
    - magnetic cursor halo (desktop)
@@ -73,7 +73,7 @@
     });
 
     // update <title>
-    document.title = lang === 'zh-CN' ? 'eason — 许肥球' : 'eason — xufeiqiu';
+    document.title = lang === 'zh-CN' ? 'XCY — eason' : 'eason — XCY';
 
     // re-run typewriter with new word list
     restartTypewriter(lang);

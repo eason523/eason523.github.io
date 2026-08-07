@@ -10,7 +10,7 @@ const HOMEPAGE_I18N = {
     'nav.contact':  '联系',
 
     'hero.eyebrow': '你好，我是',
-    'hero.nameZh':  '许肥球',
+    'hero.nameZh':  'XCY',
     'hero.role':    'eason@github · CS 学生 · {{school}}',
     'hero.tagline': '我在造 <strong>{{tagline}}</strong> 的软件。',
     'hero.bio':     '{{bio}}',

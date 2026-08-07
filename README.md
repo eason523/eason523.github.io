@@ -1,6 +1,6 @@
 # eason523.github.io
 
-Personal site of **eason / 许肥球** — a CS student building software for calm, useful tools.
+Personal site of **eason* — a CS student building software for calm, useful tools.
 
 ## What's here
 

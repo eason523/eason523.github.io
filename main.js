@@ -368,7 +368,7 @@
     const links = $$('.nav__links a');
 
     // active-section observer: kick in ~35% viewport band, bottom nav excluded
-    const sectionIds = ['work', 'blog', 'skills', 'contact'].map((id) => document.getElementById(id)).filter(Boolean);
+    const sectionIds = ['work', 'blog', 'skills', 'journey', 'repos', 'contact'].map((id) => document.getElementById(id)).filter(Boolean);
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         const id = entry.target.id;
@@ -432,6 +432,42 @@
     });
   }
 
+  // ---------- GitHub recent repos (graceful fallback) ----------
+  function bindRepos() {
+    const list = $('#repos-list');
+    if (!list) return;
+
+    const render = (items) => {
+      list.innerHTML = items.map((r) => `
+        <a class="repo-card reveal" href="${r.html_url}" target="_blank" rel="noopener">
+          <div class="repo-card__head">
+            <h3 class="repo-card__name mono">${r.name}</h3>
+            <span class="repo-card__star mono" aria-hidden="true">★ ${r.stargazers_count || 0}</span>
+          </div>
+          <p class="repo-card__desc">${r.description || ''}</p>
+          <span class="repo-card__meta mono">${r.language || '—'}${r.fork ? ' · fork' : ''}</span>
+        </a>`).join('');
+      reveal();
+    };
+
+    const fail = () => {
+      list.innerHTML = `<p class="repos__hint">${currentLang === 'zh-CN' ? '仓库暂时拉取不到，稍后再来。' : 'Repos unavailable right now.'}</p>`;
+    };
+
+    fetch('https://api.github.com/users/eason523/repos?sort=pushed&per_page=6&type=owner')
+      .then((res) => {
+        if (!res.ok) throw new Error(String(res.status));
+        return res.json();
+      })
+      .then((data) => {
+        const owner = data
+          .filter((r) => !r.fork)
+          .slice(0, 6);
+        if (owner.length) render(owner); else fail();
+      })
+      .catch(fail);
+  }
+
   // ---------- boot ----------
   function boot() {
     const initial = getInitialLang();
@@ -445,6 +481,7 @@
     bindModal();
     bindScrollProgress();
     bindNavMenu();
+    bindRepos();
     applyLang(initial);
     applyTheme(getInitialTheme());
   }

@@ -897,6 +897,73 @@ body.modal-open { overflow: hidden; }
   .modal__dialog { max-height: 92vh; }
 }
 
+/* ---------- 12. journey timeline ---------- */
+.journey__list {
+  position: relative;
+  margin: 0;
+  padding: var(--s-2) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+.journey__list::before {
+  content: '';
+  position: absolute;
+  left: 6px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-2) 100%);
+  opacity: .35;
+}
+.journey__item { position: relative; padding-left: var(--s-5); }
+.journey__dot {
+  position: absolute;
+  left: 0; top: 6px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.journey__date {
+  display: inline-block;
+  margin-bottom: var(--s-1);
+  font-size: var(--fs-xs);
+  color: var(--accent);
+  letter-spacing: .1em;
+}
+.journey__title { margin: 0 0 var(--s-1); font-size: var(--fs-lg); font-weight: 600; letter-spacing: -.01em; }
+.journey__desc { margin: 0; font-size: var(--fs-sm); color: var(--fg-muted); max-width: 52ch; line-height: 1.6; }
+
+/* ---------- 12b. github repos ---------- */
+.repos__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--s-3);
+}
+.repo-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-4);
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: 0 10px 28px -20px rgba(0, 0, 0, .4);
+  transition: transform var(--t-base) var(--ease),
+              border-color var(--t-base) var(--ease),
+              box-shadow var(--t-base) var(--ease);
+}
+.repo-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-raised), 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.repo-card__head { display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); }
+.repo-card__name { margin: 0; font-size: var(--fs-sm); font-weight: 500; color: var(--accent); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.repo-card__star { font-size: var(--fs-xs); color: var(--fg-muted); white-space: nowrap; }
+.repo-card__desc { margin: 0; font-size: var(--fs-sm); color: var(--fg-muted); line-height: 1.5; flex: 1; }
+.repo-card__meta { font-size: var(--fs-xs); color: var(--fg-muted); }
+.repos__hint { color: var(--fg-muted); font-size: var(--fs-sm); }
+
 /* ---------- 12. contact ---------- */
 .contact__links {
   display: grid;

@@ -11,7 +11,21 @@
   <meta property="og:description" content="CS student. Building software for calm, useful tools.">
   <meta property="og:type" content="website">
   <title>eason — eason</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230A0A0B'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-family='Inter,sans-serif' font-size='56' font-weight='600' fill='%23D6FF3B'%3Ee%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "eason",
+    "url": "https://eason523.github.io/",
+    "sameAs": [
+      "https://github.com/eason523",
+      "https://x.com/eason523"
+    ],
+    "jobTitle": "CS Student",
+    "knowsAbout": ["JavaScript", "TypeScript", "Python", "AI Agents", "Web"]
+  }
+  </script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230B0B12'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-family='Inter,sans-serif' font-size='56' font-weight='600' fill='%23FB7299'%3Ee%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap">
@@ -43,7 +57,9 @@
     <ul class="nav__links" id="nav-links">
       <li><a href="#work" data-i18n="nav.work">Work</a></li>
       <li><a href="#blog" data-i18n="nav.blog">Writing</a></li>
+      <li><a href="#journey" data-i18n="nav.journey">Journey</a></li>
       <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+      <li><a href="#repos" data-i18n="nav.repos">Repos</a></li>
       <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
     </ul>
     <div class="nav__tools">
@@ -307,10 +323,74 @@
       </div>
     </section>
 
+    <!-- JOURNEY -->
+    <section class="section section--journey" id="journey">
+      <header class="section__head">
+        <p class="section__eyebrow mono reveal">05</p>
+        <h2 class="section__title reveal" data-i18n="journey.title">Timeline</h2>
+        <p class="section__sub reveal" data-i18n="journey.sub">A short version of the road here.</p>
+      </header>
+
+      <ol class="journey__list">
+        <li class="journey__item reveal">
+          <span class="journey__dot" aria-hidden="true"></span>
+          <div class="journey__body">
+            <span class="journey__date mono" data-i18n="journey1.date">2024</span>
+            <h3 class="journey__title" data-i18n="journey1.title">Started coding</h3>
+            <p class="journey__desc" data-i18n="journey1.desc">Picked up my first language, learned how much I don’t know.</p>
+          </div>
+        </li>
+        <li class="journey__item reveal">
+          <span class="journey__dot" aria-hidden="true"></span>
+          <div class="journey__body">
+            <span class="journey__date mono" data-i18n="journey2.date">2025</span>
+            <h3 class="journey__title" data-i18n="journey2.title">First useful tools</h3>
+            <p class="journey__desc" data-i18n="journey2.desc">Started shipping small tools that actually solved my own problems — here’s where making things stuck.</p>
+          </div>
+        </li>
+        <li class="journey__item reveal">
+          <span class="journey__dot" aria-hidden="true"></span>
+          <div class="journey__body">
+            <span class="journey__date mono" data-i18n="journey3.date">2025</span>
+            <h3 class="journey__title" data-i18n="journey3.title">Picked up AI tooling</h3>
+            <p class="journey__desc" data-i18n="journey3.desc">Discovered agents and built my workflow around them — faster at the grunt, more careful at the checks.</p>
+          </div>
+        </li>
+        <li class="journey__item reveal">
+          <span class="journey__dot" aria-hidden="true"></span>
+          <div class="journey__body">
+            <span class="journey__date mono" data-i18n="journey4.date">2026</span>
+            <h3 class="journey__title" data-i18n="journey4.title">Building agent-driven</h3>
+            <p class="journey__desc" data-i18n="journey4.desc">Turned the workflow into practice — shipping projects, keeping the judgment mine.</p>
+          </div>
+        </li>
+        <li class="journey__item reveal">
+          <span class="journey__dot" aria-hidden="true"></span>
+          <div class="journey__body">
+            <span class="journey__date mono" data-i18n="journey5.date">2026</span>
+            <h3 class="journey__title" data-i18n="journey5.title">Opened this site & blog</h3>
+            <p class="journey__desc" data-i18n="journey5.desc">A calm corner for writing things down. Pushed, pinned, and an ongoing project.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- GITHUB -->
+    <section class="section section--repos" id="repos">
+      <header class="section__head">
+        <p class="section__eyebrow mono reveal">06</p>
+        <h2 class="section__title reveal" data-i18n="repos.title">Recent repos</h2>
+        <p class="section__sub reveal" data-i18n="repos.sub">Pulled live from GitHub.</p>
+      </header>
+      <div class="repos__list" id="repos-list" aria-live="polite">
+        <p class="repos__hint reveal">…</p>
+      </div>
+    </section>
+
     <!-- CONTACT -->
     <section class="section section--contact" id="contact">
       <header class="section__head">
-        <p class="section__eyebrow mono reveal">05</p>
+        <p class="section__eyebrow mono reveal">07</p>
         <h2 class="section__title reveal" data-i18n="contact.title">Get in touch</h2>
         <p class="section__sub reveal" data-i18n="contact.invite">
           想聊合作 / 一起做点东西？随时来信。
@@ -326,6 +406,21 @@
         <a class="contact__link" href="https://github.com/eason523" target="_blank" rel="noopener">
           <span class="contact__link-label mono">GitHub</span>
           <span class="contact__link-value">@eason523</span>
+          <span class="contact__link-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="contact__link" href="https://x.com/eason523" target="_blank" rel="noopener">
+          <span class="contact__link-label mono" data-i18n="contact.x">X / Twitter</span>
+          <span class="contact__link-value">@eason523</span>
+          <span class="contact__link-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="contact__link" href="https://space.bilibili.com/" target="_blank" rel="noopener">
+          <span class="contact__link-label mono" data-i18n="contact.bili">Bilibili</span>
+          <span class="contact__link-value" data-i18n="contact.biliValue">bilibili</span>
+          <span class="contact__link-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="contact__link" href="https://www.zhihu.com/" target="_blank" rel="noopener">
+          <span class="contact__link-label mono" data-i18n="contact.zhihu">Zhihu</span>
+          <span class="contact__link-value" data-i18n="contact.zhihuValue">知乎</span>
           <span class="contact__link-arrow" aria-hidden="true">↗</span>
         </a>
       </div>

@@ -10,7 +10,7 @@ const HOMEPAGE_I18N = {
     'nav.skills':   '技能',
     'nav.contact':  '联系',
 
-    'hero.eyebrow': '你好，我是',
+    'hero.eyebrow': '👋 你好，我是',
     'hero.nameZh':  'XCY',
     'hero.role':    'eason@github · CS 学生 · {{school}}',
     'hero.tagline': '我在造 <strong>{{tagline}}</strong> 的软件。',
@@ -57,6 +57,7 @@ const HOMEPAGE_I18N = {
 
     'blog.title': '写作',
     'blog.sub':   '随手记的短文，点开看看。',
+    'blog.all':   '查看全部文章 ↗',
 
     'blog.p1.date':  '03/31',
     'blog.p1.title': 'Claude Code 源码泄露事件',
@@ -104,7 +105,7 @@ const HOMEPAGE_I18N = {
     'contact.email':  '邮箱',
     'contact.emailValue': '{{email}}',
 
-    'footer.built': '安静地造',
+    'footer.built': '安静地造 ✨',
     'footer.top':   '↑ 回到顶部',
 
     'a11y.skip':    '跳到内容'
@@ -116,7 +117,7 @@ const HOMEPAGE_I18N = {
     'nav.skills':   'Skills',
     'nav.contact':  'Contact',
 
-    'hero.eyebrow': 'Hi, I’m',
+    'hero.eyebrow': '👋 Hi, I’m',
     'hero.nameZh':  'eason',
     'hero.role':    'eason@github · CS Student · {{school}}',
     'hero.tagline': 'I build software for <strong>{{tagline}}</strong>.',
@@ -163,6 +164,7 @@ const HOMEPAGE_I18N = {
 
 'blog.title': 'Writing',
     'blog.sub':   'Short notes, folded up here.',
+    'blog.all':   'Read all posts ↗',
 
     'blog.p1.date':  '03/31',
     'blog.p1.title': 'The Claude Code source leak',
@@ -209,7 +211,7 @@ const HOMEPAGE_I18N = {
     'contact.email':  'Email',
     'contact.emailValue': '{{email}}',
 
-    'footer.built': 'Built quietly',
+    'footer.built': 'Built quietly ✨',
     'footer.top':   '↑ Back to top',
 
     'a11y.skip':    'Skip to content'

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#0B0B12" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#FBF9FF" media="(prefers-color-scheme: light)">
+  <title>Blog — eason</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230A0A0B'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-family='Inter,sans-serif' font-size='56' font-weight='600' fill='%23D6FF3B'%3Ee%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+  <script src="../i18n.js"></script>
+
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+  <nav class="nav nav--blog" id="nav">
+    <a class="nav__brand" href="../index.html" aria-label="eason523">
+      <span class="nav__brand-bar"></span>
+      <span class="nav__brand-name">eason523</span>
+    </a>
+    <div class="nav__tools">
+      <button type="button" class="theme-switch" id="theme-toggle" aria-label="Switch theme">◐</button>
+      <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="zh-CN" class="is-active" aria-pressed="true">中</button>
+        <button type="button" data-lang="en-US" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="blog-page">
+    <header class="blog-page__head">
+      <p class="mono blog-page__eyebrow" data-b-i18n="arch.brand">blog</p>
+      <h1 class="blog-page__title" data-b-i18n="arch.title">Notes</h1>
+      <p class="blog-page__sub" data-b-i18n="arch.sub">Engineering · Projects · Essays — written slowly, published often.</p>
+      <p class="blog-page__emoji" aria-hidden="true">✍️ 📝 🚀 ☕ ✨</p>
+      <div class="blog-page__actions">
+        <label class="blog-search">
+          <span class="blog-search__icon" aria-hidden="true">⌕</span>
+          <input type="search" id="blog-search" placeholder="Search posts…" data-b-i18n-attr="searchPlaceholder">
+        </label>
+        <div class="blog-filters" id="blog-filters" role="group" aria-label="Filter">
+          <button type="button" data-cat="all" class="is-active">All</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="blog-list" id="blog-list" aria-live="polite"></section>
+
+    <div class="blog-empty" id="blog-empty" hidden data-b-i18n="empty">No posts match.</div>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__line mono">© 2026 eason · <a class="footer__top" href="../index.html">← Home</a></p>
+  </footer>
+
+  <script src="blog-data.js"></script>
+  <script src="blog.js"></script>
+</body>
+</html>

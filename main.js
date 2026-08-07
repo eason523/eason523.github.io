@@ -123,7 +123,7 @@
     const isLight = resolvedTheme(theme) === 'light';
     $$('meta[name="theme-color"]').forEach((m) => {
       const dark = /dark/.test(m.getAttribute('media') || '');
-      m.setAttribute('content', dark ? '#0A0A0B' : '#FAFAF7');
+      m.setAttribute('content', dark ? '#0B0B12' : '#FBF9FF');
       m.setAttribute('media', (dark === isLight) ? 'not all' : 'all');
     });
   }

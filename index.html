@@ -31,19 +31,23 @@
   <!-- magnetic cursor halo (desktop only) -->
   <div class="cursor-halo" id="cursor-halo" aria-hidden="true"></div>
 
+  <!-- scroll progress -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
   <!-- top navigation -->
   <nav class="nav" id="nav">
     <a class="nav__brand" href="#hero" aria-label="eason523">
       <span class="nav__brand-bar"></span>
       <span class="nav__brand-name">eason523</span>
     </a>
-    <ul class="nav__links">
+    <ul class="nav__links" id="nav-links">
       <li><a href="#work" data-i18n="nav.work">Work</a></li>
       <li><a href="#blog" data-i18n="nav.blog">Writing</a></li>
       <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
       <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
     </ul>
     <div class="nav__tools">
+      <button type="button" class="nav__toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu"><span></span></button>
       <button type="button" class="theme-switch" id="theme-toggle" aria-label="Switch theme">◐</button>
       <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
         <button type="button" data-lang="zh-CN" class="is-active" aria-pressed="true">中</button>
@@ -94,7 +98,7 @@
       </header>
 
       <div class="work__grid">
-        <article class="card reveal" data-project="first">
+        <article class="card reveal" data-project="first" data-detail="work.p1.modal" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="card__media">
             <img src="PNG/first.png" alt="Project One cover" loading="lazy" decoding="async">
           </div>
@@ -116,7 +120,7 @@
           </div>
         </article>
 
-        <article class="card reveal" data-project="second">
+        <article class="card reveal" data-project="second" data-detail="work.p2.modal" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="card__media">
             <img src="PNG/second.png" alt="Project Two cover" loading="lazy" decoding="async">
           </div>
@@ -138,7 +142,7 @@
           </div>
         </article>
 
-        <article class="card reveal" data-project="third">
+        <article class="card reveal" data-project="third" data-detail="work.p3.modal" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="card__media">
             <img src="PNG/third.png" alt="Project Three cover" loading="lazy" decoding="async">
           </div>
@@ -255,6 +259,51 @@
           </summary>
           <div class="blog__body" data-i18n="blog.p5.body"></div>
         </details>
+
+        <details class="blog__post reveal">
+          <summary>
+            <span class="blog__date mono" data-i18n="blog.p6.date">08/10</span>
+            <h3 class="blog__post-title" data-i18n="blog.p6.title">用 Agent 工作流实践</h3>
+            <span class="blog__chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="blog__body" data-i18n="blog.p6.body"></div>
+        </details>
+
+        <details class="blog__post reveal">
+          <summary>
+            <span class="blog__date mono" data-i18n="blog.p7.date">04/05</span>
+            <h3 class="blog__post-title" data-i18n="blog.p7.title">一次源码泄露，一堂打包工程课</h3>
+            <span class="blog__chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="blog__body" data-i18n="blog.p7.body"></div>
+        </details>
+
+        <details class="blog__post reveal">
+          <summary>
+            <span class="blog__date mono" data-i18n="blog.p8.date">08/12</span>
+            <h3 class="blog__post-title" data-i18n="blog.p8.title">这个站是怎么造的</h3>
+            <span class="blog__chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="blog__body" data-i18n="blog.p8.body"></div>
+        </details>
+
+        <details class="blog__post reveal">
+          <summary>
+            <span class="blog__date mono" data-i18n="blog.p9.date">06/25</span>
+            <h3 class="blog__post-title" data-i18n="blog.p9.title">设计让人想用，工具让人愿意</h3>
+            <span class="blog__chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="blog__body" data-i18n="blog.p9.body"></div>
+        </details>
+
+        <details class="blog__post reveal">
+          <summary>
+            <span class="blog__date mono" data-i18n="blog.p10.date">08/15</span>
+            <h3 class="blog__post-title" data-i18n="blog.p10.title">我常读的好网站</h3>
+            <span class="blog__chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="blog__body" data-i18n="blog.p10.body"></div>
+        </details>
       </div>
     </section>
 
@@ -287,6 +336,20 @@
     <p class="footer__line mono">© 2026 eason · <span data-i18n="footer.built">Built quietly</span></p>
     <a class="footer__top mono" href="#hero" data-i18n="footer.top">↑ Back to top</a>
   </footer>
+
+  <!-- back to top: appears after scrolling, ring shows progress -->
+  <button type="button" class="to-top" id="to-top" aria-label="Back to top">
+    <span class="to-top-icon" aria-hidden="true">↑</span>
+  </button>
+
+  <!-- project detail modal -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal__backdrop" data-modal-close></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button type="button" class="modal__close" data-modal-close aria-label="Close">×</button>
+      <div class="modal__body" id="modal-body"></div>
+    </div>
+  </div>
 
   <script src="i18n.js"></script>
   <script src="main.js"></script>

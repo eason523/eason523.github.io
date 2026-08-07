@@ -22,6 +22,9 @@
   const $  = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
+  // active locale, used by the project modal (rebuilt on open, so no data-i18n)
+  let currentLang = 'zh-CN';
+
   const STORAGE_KEY = 'eason523.lang';
   const SUPPORTED = ['zh-CN', 'en-US'];
 
@@ -43,6 +46,7 @@
 
   function applyLang(lang) {
     if (!HOMEPAGE_I18N[lang]) lang = 'zh-CN';
+    currentLang = lang;
 
     // set html lang for accessibility + browser
     document.documentElement.setAttribute('lang', lang === 'zh-CN' ? 'zh-CN' : 'en');
@@ -167,6 +171,83 @@
     els.forEach((el) => io.observe(el));
   }
 
+  // ---------- project detail modal ----------
+  function bindModal() {
+    const modal = $('#modal');
+    if (!modal) return;
+    const body = $('#modal-body');
+    if (!body) return;
+
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function open(key) {
+      const val = HOMEPAGE_I18N[currentLang][key];
+      if (typeof val !== 'string') return;
+      body.innerHTML = val;
+      modal.hidden = false;
+      document.body.classList.add('modal-open');
+      requestAnimationFrame(() => modal.classList.add('is-open'));
+      const closeBtn = $('.modal__close', modal);
+      if (closeBtn) closeBtn.focus();
+      // lock card hover tilt while modal is up
+      $$('.card').forEach((c) => c.classList.add('is-modal-open'));
+    }
+    function close() {
+      modal.classList.remove('is-open');
+      document.body.classList.remove('modal-open');
+      $$('.card').forEach((c) => c.classList.remove('is-modal-open'));
+      if (reduce) { modal.hidden = true; return; }
+      setTimeout(() => { if (!modal.classList.contains('is-open')) modal.hidden = true; }, 250);
+    }
+
+    $$('.card[data-detail]').forEach((card) => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('a')) return; // keep in-card links working
+        open(card.getAttribute('data-detail'));
+      });
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          open(card.getAttribute('data-detail'));
+        }
+      });
+    });
+
+    $$('[data-modal-close]', modal).forEach((el) => el.addEventListener('click', close));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.hidden) close();
+    });
+  }
+
+  // ---------- scroll progress bar + back-to-top ----------
+  function bindScrollProgress() {
+    const bar = $('#scroll-progress');
+    const top = $('#to-top');
+    if (!bar && !top) return;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - window.innerHeight;
+      const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+      if (bar) bar.style.transform = `scaleX(${p})`;
+      if (top) {
+        const visible = window.scrollY > 400;
+        top.classList.toggle('is-visible', visible);
+        top.setAttribute('aria-hidden', String(!visible));
+        top.style.setProperty('--p', `${(p * 100).toFixed(2)}%`);
+      }
+    };
+    if (top) {
+      top.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
   // ---------- magnetic cursor halo ----------
   function bindCursorHalo() {
     const halo = $('#cursor-halo');
@@ -281,17 +362,57 @@
     }, 60);
   }
 
-  // ---------- nav state on scroll ----------
+  // ---------- nav state on scroll (transparency + scrollspy) ----------
   function bindNavState() {
     const nav = $('#nav');
-    if (!nav) return;
+    const links = $$('.nav__links a');
+
+    // active-section observer: kick in ~35% viewport band, bottom nav excluded
+    const sectionIds = ['work', 'blog', 'skills', 'contact'].map((id) => document.getElementById(id)).filter(Boolean);
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.id;
+        if (entry.isIntersecting) {
+          links.forEach((a) => a.classList.toggle('is-active', a.getAttribute('href') === `#${id}`));
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+    sectionIds.forEach((s) => io.observe(s));
+
     const onScroll = () => {
-      nav.style.borderBottomColor = window.scrollY > 8
-        ? 'color-mix(in srgb, var(--line) 90%, transparent)'
-        : 'color-mix(in srgb, var(--line) 60%, transparent)';
+      const atTop = window.scrollY <= 8;
+      nav.classList.toggle('is-scrolled', !atTop);
+      // soften the bottom border while scrolled into content
+      nav.style.borderBottomColor = atTop
+        ? 'color-mix(in srgb, var(--line) 0%, transparent)'
+        : 'color-mix(in srgb, var(--line) 90%, transparent)';
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+  }
+
+  // ---------- mobile nav menu ----------
+  function bindNavMenu() {
+    const nav = $('#nav');
+    const toggle = $('#nav-toggle');
+    if (!nav || !toggle) return;
+
+    function setOpen(open) {
+      nav.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    }
+    toggle.addEventListener('click', () => setOpen(!nav.classList.contains('is-open')));
+    $('#nav-links').addEventListener('click', (e) => {
+      if (e.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) setOpen(false);
+    });
+    // close when resized past the breakpoint
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 720) setOpen(false);
+    });
   }
 
   // ---------- image error fallback ----------
@@ -321,6 +442,9 @@
     bindNavState();
     bindImageFallbacks();
     bindThemeToggle();
+    bindModal();
+    bindScrollProgress();
+    bindNavMenu();
     applyLang(initial);
     applyTheme(getInitialTheme());
   }

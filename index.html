@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="eason / 许肥球 — building software for calm, useful tools.">
+  <meta name="theme-color" content="#0A0A0B" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#FAFAF7" media="(prefers-color-scheme: light)">
+  <meta property="og:title" content="eason — 许肥球">
+  <meta property="og:description" content="CS student. Building software for calm, useful tools.">
+  <meta property="og:type" content="website">
+  <title>eason — 许肥球</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230A0A0B'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-family='Inter,sans-serif' font-size='56' font-weight='600' fill='%23D6FF3B'%3Ee%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- skip link for keyboard users -->
+  <a class="skip-link" href="#hero" data-i18n="a11y.skip">Skip to content</a>
+
+  <!-- background drift layers -->
+  <div class="bg-layer" aria-hidden="true">
+    <span class="bg-orb bg-orb--1"></span>
+    <span class="bg-orb bg-orb--2"></span>
+    <span class="bg-noise" aria-hidden="true"></span>
+  </div>
+
+  <!-- magnetic cursor halo (desktop only) -->
+  <div class="cursor-halo" id="cursor-halo" aria-hidden="true"></div>
+
+  <!-- top navigation -->
+  <nav class="nav" id="nav">
+    <a class="nav__brand" href="#hero" aria-label="eason523">
+      <span class="nav__brand-bar"></span>
+      <span class="nav__brand-name">eason523</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="#work" data-i18n="nav.work">Work</a></li>
+      <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+      <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+    </ul>
+    <div class="nav__tools">
+      <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="zh-CN" class="is-active" aria-pressed="true">中</button>
+        <button type="button" data-lang="en-US" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero__inner">
+        <p class="hero__eyebrow reveal" data-i18n="hero.eyebrow">你好，我是</p>
+
+        <h1 class="hero__title reveal">
+          <span data-i18n="hero.nameZh">许肥球</span><span class="hero__title-sep">.</span>
+        </h1>
+
+        <p class="hero__role reveal mono">
+          <span class="hero__prompt">$</span>
+          <span data-i18n="hero.role">eason@github · CS Student · {{school}}</span>
+        </p>
+
+        <p class="hero__tagline reveal" data-i18n="hero.tagline">
+          我在造 <strong>{{tagline}}</strong> 的软件。
+        </p>
+
+        <p class="hero__bio reveal" data-i18n="hero.bio">
+          {{bio}}
+        </p>
+
+        <div class="hero__typewriter reveal" aria-live="polite">
+          <span class="mono">$ </span>
+          <span class="hero__typewriter-text" id="typewriter"></span>
+          <span class="hero__caret" aria-hidden="true"></span>
+        </div>
+
+        <a class="hero__scroll reveal" href="#work" data-i18n="hero.scroll">↓ Work</a>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section class="section section--work" id="work">
+      <header class="section__head">
+        <p class="section__eyebrow mono reveal">02</p>
+        <h2 class="section__title reveal" data-i18n="work.title">Selected work</h2>
+        <p class="section__sub reveal" data-i18n="work.sub">Things I've built recently.</p>
+      </header>
+
+      <div class="work__grid">
+        <article class="card reveal" data-project="first">
+          <div class="card__media">
+            <img src="PNG/first.png" alt="Project One cover" loading="lazy" decoding="async">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">
+              <span data-i18n="work.p1.title">Project One</span>
+              <span class="card__title-mark">↗</span>
+            </h3>
+            <p class="card__desc" data-i18n="work.p1.desc">A short description of the first project.</p>
+            <ul class="card__tags mono">
+              <li data-i18n="work.p1.tag1">Tag</li>
+              <li data-i18n="work.p1.tag2">Tag</li>
+              <li data-i18n="work.p1.tag3">Tag</li>
+            </ul>
+            <div class="card__links">
+              <a href="https://github.com/eason523" data-i18n="work.github" target="_blank" rel="noopener">GitHub ↗</a>
+              <a class="card__demo" href="github项目查阅/index.html" target="_blank" rel="noopener" data-i18n="work.demo">Demo ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-project="second">
+          <div class="card__media">
+            <img src="PNG/second.png" alt="Project Two cover" loading="lazy" decoding="async">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">
+              <span data-i18n="work.p2.title">Project Two</span>
+              <span class="card__title-mark">↗</span>
+            </h3>
+            <p class="card__desc" data-i18n="work.p2.desc">A short description of the second project.</p>
+            <ul class="card__tags mono">
+              <li data-i18n="work.p2.tag1">Tag</li>
+              <li data-i18n="work.p2.tag2">Tag</li>
+              <li data-i18n="work.p2.tag3">Tag</li>
+            </ul>
+            <div class="card__links">
+              <a href="https://github.com/eason523" data-i18n="work.github" target="_blank" rel="noopener">GitHub ↗</a>
+              <a class="card__demo" href="editor/" target="_blank" rel="noopener" data-i18n="work.demo">Demo ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-project="third">
+          <div class="card__media">
+            <img src="PNG/third.png" alt="Project Three cover" loading="lazy" decoding="async">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">
+              <span data-i18n="work.p3.title">Project Three</span>
+              <span class="card__title-mark">↗</span>
+            </h3>
+            <p class="card__desc" data-i18n="work.p3.desc">A short description of the third project.</p>
+            <ul class="card__tags mono">
+              <li data-i18n="work.p3.tag1">Tag</li>
+              <li data-i18n="work.p3.tag2">Tag</li>
+              <li data-i18n="work.p3.tag3">Tag</li>
+            </ul>
+            <div class="card__links">
+              <a href="https://github.com/eason523" data-i18n="work.github" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section section--skills" id="skills">
+      <header class="section__head">
+        <p class="section__eyebrow mono reveal">03</p>
+        <h2 class="section__title reveal" data-i18n="skills.title">Skills</h2>
+        <p class="section__sub reveal" data-i18n="skills.sub">A non-exhaustive list, sorted by how often I reach for them.</p>
+      </header>
+
+      <div class="skills__grid">
+        <div class="skills__col reveal">
+          <h3 class="skills__col-title mono" data-i18n="skills.col1">Languages</h3>
+          <ul class="skills__list">
+            <li>JavaScript</li>
+            <li>TypeScript</li>
+            <li>Python</li>
+            <li>C / C++</li>
+            <li>SQL</li>
+          </ul>
+        </div>
+        <div class="skills__col reveal">
+          <h3 class="skills__col-title mono" data-i18n="skills.col2">Tools</h3>
+          <ul class="skills__list">
+            <li>React</li>
+            <li>Vue</li>
+            <li>Node.js</li>
+            <li>Vite</li>
+            <li>Figma</li>
+          </ul>
+        </div>
+        <div class="skills__col reveal">
+          <h3 class="skills__col-title mono" data-i18n="skills.col3">Craft</h3>
+          <ul class="skills__list">
+            <li data-i18n="skills.craft1">System design</li>
+            <li data-i18n="skills.craft2">Writing</li>
+            <li data-i18n="skills.craft3">Tinkering</li>
+            <li data-i18n="skills.craft4">Reading papers</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section section--contact" id="contact">
+      <header class="section__head">
+        <p class="section__eyebrow mono reveal">04</p>
+        <h2 class="section__title reveal" data-i18n="contact.title">Get in touch</h2>
+        <p class="section__sub reveal" data-i18n="contact.invite">
+          想聊合作 / 一起做点东西？随时来信。
+        </p>
+      </header>
+
+      <div class="contact__links reveal">
+        <a class="contact__link" href="#" data-i18n-attr-href="mailto:{{email}}">
+          <span class="contact__link-label mono" data-i18n="contact.email">Email</span>
+          <span class="contact__link-value" data-i18n="contact.emailValue">{{email}}</span>
+          <span class="contact__link-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="contact__link" href="https://github.com/eason523" target="_blank" rel="noopener">
+          <span class="contact__link-label mono">GitHub</span>
+          <span class="contact__link-value">@eason523</span>
+          <span class="contact__link-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__line mono">© 2026 eason · <span data-i18n="footer.built">Built quietly</span></p>
+    <a class="footer__top mono" href="#hero" data-i18n="footer.top">↑ Back to top</a>
+  </footer>
+
+  <script src="i18n.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

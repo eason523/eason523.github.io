@@ -95,6 +95,11 @@ const I18N = {
     'tpl.shop-npc.tags.0':         'NPC',
     'tpl.shop-npc.tags.1':         '游戏常用',
 
+    'tpl.phone-answer.title':      '接电话对话树',
+    'tpl.phone-answer.desc':       '一段午后电话铃响起的剧情：三种初始应对（接听 / 拒接 / 忽略）→ 二级分支按来电类型展开（推销 / 朋友 / 快递）。',
+    'tpl.phone-answer.tags.0':     '多分支',
+    'tpl.phone-answer.tags.1':     '生活化',
+
     'play.exit':      '退出预览',
     'play.badge':     '剧本预览模式',
     'play.endTitle':  '🎬 剧本播放结束',
@@ -264,6 +269,11 @@ const I18N = {
     'tpl.shop-npc.desc':           'Common NPC interaction tree: greeting → intent (buy / chat / leave) → branched response.',
     'tpl.shop-npc.tags.0':         'NPC',
     'tpl.shop-npc.tags.1':         'Game-ready',
+
+    'tpl.phone-answer.title':      'Phone Answer Dialogue',
+    'tpl.phone-answer.desc':       'An afternoon phone rings: three first reactions (answer / decline / ignore) branch into caller-type paths (sales / friend / courier).',
+    'tpl.phone-answer.tags.0':     'Multi-branch',
+    'tpl.phone-answer.tags.1':     'Everyday',
 
     'play.exit':      'Exit Preview',
     'play.badge':     'Script Preview Mode',

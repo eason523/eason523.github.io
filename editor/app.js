@@ -2112,6 +2112,123 @@ const BUILTIN_TEMPLATES = [
         ]
       };
     }
+  },
+  {
+    key: 'phone-answer',
+    icon: '📞',
+    titleKey: 'tpl.phone-answer.title',
+    descKey:  'tpl.phone-answer.desc',
+    tagKeys:  ['tpl.phone-answer.tags.0', 'tpl.phone-answer.tags.1'],
+    build: function(){
+      return {
+        meta: { format:'node-narrative-script', version:'1.0' },
+        nodes: [
+          { id:'n_start', type:'start', position:{x:-620,y:80}, fields:{ label:t('default.startLabel') } },
+          { id:'n_ring', type:'dialogue', position:{x:-380,y:80}, fields:{ speaker:'旁白', text:'午后三点，一阵急促的铃声打破了安静。屏幕亮起，显示着一个陌生的号码。' } },
+
+          { id:'n_choice1', type:'choice', position:{x:-60,y:80}, fields:{
+              prompt:'你要怎么做？',
+              options:[
+                { id:'opt_pick',       text:'滑动接听' },
+                { id:'opt_decline',    text:'点击拒接' },
+                { id:'opt_ignore',     text:'放着让它响' }
+              ]
+            }
+          },
+
+          // ---- 接听分支 ----
+          { id:'n_hello', type:'dialogue', position:{x:300,y:-360}, fields:{ speaker:'你', text:'喂，您好，哪位？' } },
+          { id:'n_intro', type:'dialogue', position:{x:640,y:-360}, fields:{ speaker:'陌生人', text:'您好，我是 XX 公司的客服，现在方便聊两分钟吗？' } },
+          { id:'n_choice2', type:'choice', position:{x:980,y:-360}, fields:{
+              prompt:'对方听起来像？',
+              options:[
+                { id:'opt_sales',   text:'推销电话' },
+                { id:'opt_friend',  text:'老朋友' },
+                { id:'opt_courier', text:'快递 / 外卖' }
+              ]
+            }
+          },
+          { id:'n_sales', type:'dialogue', position:{x:1340,y:-580}, fields:{ speaker:'推销员', text:'我们这边有一个非常优惠的活动，仅限今日……' } },
+          { id:'n_sales_react', type:'choice', position:{x:1700,y:-580}, fields:{
+              prompt:'你的反应？',
+              options:[
+                { id:'opt_hang_sales', text:'礼貌挂断' },
+                { id:'opt_listen',     text:'听一会儿' },
+                { id:'opt_ask',        text:'直接问需求' }
+              ]
+            }
+          },
+          { id:'n_friend', type:'dialogue', position:{x:1340,y:-360}, fields:{ speaker:'老朋友', text:'嘿，是我。最近过得怎么样？' } },
+          { id:'n_friend_react', type:'choice', position:{x:1700,y:-360}, fields:{
+              prompt:'你想说什么？',
+              options:[
+                { id:'opt_chat',     text:'寒暄几句' },
+                { id:'opt_meet',     text:'约个时间见面' },
+                { id:'opt_business', text:'问他有什么事' }
+              ]
+            }
+          },
+          { id:'n_courier', type:'dialogue', position:{x:1340,y:-140}, fields:{ speaker:'快递员', text:'您好，您的快递到了小区门口，方便下楼取一下吗？' } },
+          { id:'n_courier_react', type:'choice', position:{x:1700,y:-140}, fields:{
+              prompt:'你打算？',
+              options:[
+                { id:'opt_pickup',    text:'现在下楼取' },
+                { id:'opt_lobby',     text:'放到快递柜' },
+                { id:'opt_tomorrow',  text:'明天再送' }
+              ]
+            }
+          },
+
+          // ---- 拒接分支 ----
+          { id:'n_decline', type:'dialogue', position:{x:300,y:80}, fields:{ speaker:'旁白', text:'你按下了红色的挂断键。但电话几乎立刻又响了起来——同一个号码。' } },
+          { id:'n_choice3', type:'choice', position:{x:640,y:80}, fields:{
+              prompt:'这次呢？',
+              options:[
+                { id:'opt_answer_now',   text:'这次接听' },
+                { id:'opt_decline_again',text:'再次拒接' },
+                { id:'opt_block',        text:'直接拉黑' }
+              ]
+            }
+          },
+          { id:'n_end_decline', type:'dialogue', position:{x:980,y:80}, fields:{ speaker:'旁白', text:'屏幕上显示对方已挂断，电话终于安静下来。' } },
+
+          // ---- 忽略分支 ----
+          { id:'n_ignore', type:'dialogue', position:{x:300,y:480}, fields:{ speaker:'旁白', text:'你把手机翻了个面，让它在桌面上独自响着，最终转入了语音信箱。' } },
+          { id:'n_choice4', type:'choice', position:{x:640,y:480}, fields:{
+              prompt:'之后你打算？',
+              options:[
+                { id:'opt_listen_vm', text:'听一下语音信箱' },
+                { id:'opt_call_back', text:'主动拨回去' },
+                { id:'opt_never',     text:'假装没发生过' }
+              ]
+            }
+          }
+        ],
+        connections: [
+          { id:'c1',  from:{node:'n_start',   port:'out'},            to:{node:'n_ring'} },
+          { id:'c2',  from:{node:'n_ring',    port:'out'},            to:{node:'n_choice1'} },
+          // 接听
+          { id:'c3',  from:{node:'n_choice1', port:'opt_pick'},       to:{node:'n_hello'} },
+          { id:'c4',  from:{node:'n_hello',   port:'out'},            to:{node:'n_intro'} },
+          { id:'c5',  from:{node:'n_intro',   port:'out'},            to:{node:'n_choice2'} },
+          { id:'c6',  from:{node:'n_choice2', port:'opt_sales'},      to:{node:'n_sales'} },
+          { id:'c7',  from:{node:'n_sales',   port:'out'},            to:{node:'n_sales_react'} },
+          { id:'c8',  from:{node:'n_choice2', port:'opt_friend'},     to:{node:'n_friend'} },
+          { id:'c9',  from:{node:'n_friend',  port:'out'},            to:{node:'n_friend_react'} },
+          { id:'c10', from:{node:'n_choice2', port:'opt_courier'},    to:{node:'n_courier'} },
+          { id:'c11', from:{node:'n_courier', port:'out'},           to:{node:'n_courier_react'} },
+          // 拒接
+          { id:'c12', from:{node:'n_choice1', port:'opt_decline'},    to:{node:'n_decline'} },
+          { id:'c13', from:{node:'n_decline', port:'out'},            to:{node:'n_choice3'} },
+          { id:'c14', from:{node:'n_choice3', port:'opt_answer_now'}, to:{node:'n_hello'} },
+          { id:'c15', from:{node:'n_choice3', port:'opt_decline_again'}, to:{node:'n_end_decline'} },
+          { id:'c16', from:{node:'n_choice3', port:'opt_block'},      to:{node:'n_end_decline'} },
+          // 忽略
+          { id:'c17', from:{node:'n_choice1', port:'opt_ignore'},     to:{node:'n_ignore'} },
+          { id:'c18', from:{node:'n_ignore',  port:'out'},            to:{node:'n_choice4'} }
+        ]
+      };
+    }
   }
 ];
 
@@ -2119,23 +2236,23 @@ const templateModal = document.getElementById('template-modal');
 const templateGrid = document.getElementById('template-grid');
 
 function renderTemplateGrid(){
-  templateGrid.innerHTML = BUILTIN_TEMPLATES.map(t=>`
-    <div class="template-card" data-tpl-key="${t.key}">
-      <div class="tpl-icon">${t.icon}</div>
-      <div class="tpl-title">${escapeHtml(t(t.titleKey))}</div>
-      <div class="tpl-desc">${escapeHtml(t(t.descKey))}</div>
-      <div class="tpl-meta">${t.tagKeys.map(tagKey=>`<span class="tpl-tag">${escapeHtml(t(tagKey))}</span>`).join('')}</div>
+  templateGrid.innerHTML = BUILTIN_TEMPLATES.map(tpl=>`
+    <div class="template-card" data-tpl-key="${tpl.key}">
+      <div class="tpl-icon">${tpl.icon}</div>
+      <div class="tpl-title">${escapeHtml(window.t(tpl.titleKey))}</div>
+      <div class="tpl-desc">${escapeHtml(window.t(tpl.descKey))}</div>
+      <div class="tpl-meta">${tpl.tagKeys.map(tagKey=>`<span class="tpl-tag">${escapeHtml(window.t(tagKey))}</span>`).join('')}</div>
     </div>
   `).join('');
 
   templateGrid.querySelectorAll('.template-card').forEach(card=>{
     card.addEventListener('click', ()=>{
       const key = card.getAttribute('data-tpl-key');
-      const tpl = BUILTIN_TEMPLATES.find(t=>t.key===key);
+      const tpl = BUILTIN_TEMPLATES.find(x=>x.key===key);
       if(!tpl) return;
       const title = window.t(tpl.titleKey);
       if(state.nodes.length > 0){
-        const ok = confirm(t('confirm.loadTemplate', { title }));
+        const ok = confirm(window.t('confirm.loadTemplate', { title }));
         if(!ok) return;
       }
       loadScriptFromJson(tpl.build());

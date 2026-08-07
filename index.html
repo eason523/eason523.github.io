@@ -39,10 +39,12 @@
     </a>
     <ul class="nav__links">
       <li><a href="#work" data-i18n="nav.work">Work</a></li>
+      <li><a href="#blog" data-i18n="nav.blog">Writing</a></li>
       <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
       <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
     </ul>
     <div class="nav__tools">
+      <button type="button" class="theme-switch" id="theme-toggle" aria-label="Switch theme">◐</button>
       <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
         <button type="button" data-lang="zh-CN" class="is-active" aria-pressed="true">中</button>
         <button type="button" data-lang="en-US" aria-pressed="false">EN</button>
@@ -200,10 +202,48 @@
       </div>
     </section>
 
+    <!-- BLOG -->
+    <section class="section section--blog" id="blog">
+      <header class="section__head">
+        <p class="section__eyebrow mono reveal">04</p>
+        <h2 class="section__title reveal" data-i18n="blog.title">Writing</h2>
+        <p class="section__sub reveal" data-i18n="blog.sub">Short notes, folded up here.</p>
+      </header>
+
+      <div class="blog__list">
+        <details class="blog__post reveal">
+          <summary>
+            <span class="blog__date mono" data-i18n="blog.p1.date">07/15</span>
+            <h3 class="blog__post-title" data-i18n="blog.p1.title">A quiet place to write.</h3>
+            <span class="blog__chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="blog__body" data-i18n="blog.p1.body"></div>
+        </details>
+
+        <details class="blog__post reveal">
+          <summary>
+            <span class="blog__date mono" data-i18n="blog.p2.date">06/02</span>
+            <h3 class="blog__post-title" data-i18n="blog.p2.title">Building with AI agents.</h3>
+            <span class="blog__chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="blog__body" data-i18n="blog.p2.body"></div>
+        </details>
+
+        <details class="blog__post reveal">
+          <summary>
+            <span class="blog__date mono" data-i18n="blog.p3.date">04/11</span>
+            <h3 class="blog__post-title" data-i18n="blog.p3.title">Small tools, calm days.</h3>
+            <span class="blog__chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="blog__body" data-i18n="blog.p3.body"></div>
+        </details>
+      </div>
+    </section>
+
     <!-- CONTACT -->
     <section class="section section--contact" id="contact">
       <header class="section__head">
-        <p class="section__eyebrow mono reveal">04</p>
+        <p class="section__eyebrow mono reveal">05</p>
         <h2 class="section__title reveal" data-i18n="contact.title">Get in touch</h2>
         <p class="section__sub reveal" data-i18n="contact.invite">
           想聊合作 / 一起做点东西？随时来信。

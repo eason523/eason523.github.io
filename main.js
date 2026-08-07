@@ -92,6 +92,63 @@
     });
   }
 
+  // ---------- theme switch (system / light / dark) ----------
+  const THEME_KEY = 'eason523.theme';
+  const THEMES = ['system', 'light', 'dark'];
+  const THEME_ICON = { system: '◐', light: '☀', dark: '☾' };
+  const THEME_LABEL = { system: 'Theme: follow system', light: 'Theme: light', dark: 'Theme: dark' };
+
+  function getInitialTheme() {
+    try {
+      const saved = localStorage.getItem(THEME_KEY);
+      if (THEMES.includes(saved)) return saved;
+    } catch (_) {}
+    return 'system';
+  }
+
+  function resolvedTheme(theme) {
+    if (theme === 'system') {
+      return matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    return theme;
+  }
+
+  function syncThemeColor(theme) {
+    // drive the two <meta name="theme-color"> tags so the browser chrome
+    // matches even when the user overrides the OS preference
+    const isLight = resolvedTheme(theme) === 'light';
+    $$('meta[name="theme-color"]').forEach((m) => {
+      const dark = /dark/.test(m.getAttribute('media') || '');
+      m.setAttribute('content', dark ? '#0A0A0B' : '#FAFAF7');
+      m.setAttribute('media', (dark === isLight) ? 'not all' : 'all');
+    });
+  }
+
+  function applyTheme(theme) {
+    if (!THEMES.includes(theme)) theme = 'system';
+    const root = document.documentElement;
+    if (theme === 'system') root.removeAttribute('data-theme');
+    else root.setAttribute('data-theme', theme);
+
+    const btn = $('#theme-toggle');
+    if (btn) {
+      btn.textContent = THEME_ICON[theme];
+      btn.setAttribute('aria-label', THEME_LABEL[theme]);
+    }
+    syncThemeColor(theme);
+    try { localStorage.setItem(THEME_KEY, theme); } catch (_) {}
+  }
+
+  function bindThemeToggle() {
+    const btn = $('#theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const current = getInitialTheme();
+      const next = THEMES[(THEMES.indexOf(current) + 1) % THEMES.length];
+      applyTheme(next);
+    });
+  }
+
   // ---------- scroll reveal ----------
   function bindReveal() {
     const els = $$('.reveal');
@@ -263,7 +320,9 @@
     bindTypewriter();
     bindNavState();
     bindImageFallbacks();
+    bindThemeToggle();
     applyLang(initial);
+    applyTheme(getInitialTheme());
   }
 
   if (document.readyState === 'loading') {
